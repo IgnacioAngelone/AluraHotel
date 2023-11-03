@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="335.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aplicacion.RegistroController">
+   <children>
+      <ImageView fx:id="Background" blendMode="SRC_ATOP" fitHeight="270.0" fitWidth="473.0" layoutX="-95.0" layoutY="520.0">
+         <image>
+            <Image url="@../../resources/RegistroBackground.jpg" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+      <TextField fx:id="Nombre" alignment="CENTER" layoutX="94.0" layoutY="251.0" promptText="NOMBRE">
+         <cursor>
+            <Cursor fx:constant="TEXT" />
+         </cursor>
+         <effect>
+            <InnerShadow height="8.0" radius="3.5" width="8.0" />
+         </effect></TextField>
+      <ImageView fx:id="Typo" fitHeight="150.0" fitWidth="200.0" layoutX="69.0" layoutY="61.0">
+         <image>
+            <Image url="@../../resources/Typo.jpg" />
+         </image>
+      </ImageView>
+      <TextField fx:id="Dni" alignment="CENTER" layoutX="93.0" layoutY="309.0" promptText="DNI">
+         <cursor>
+            <Cursor fx:constant="TEXT" />
+         </cursor>
+         <effect>
+            <InnerShadow height="8.0" radius="3.5" width="8.0" />
+         </effect></TextField>
+      <PasswordField fx:id="Contraseña" alignment="CENTER" layoutX="93.0" layoutY="371.0" promptText="CONTRASEÑA">
+         <cursor>
+            <Cursor fx:constant="TEXT" />
+         </cursor>
+         <effect>
+            <InnerShadow height="8.0" radius="3.5" width="8.0" />
+         </effect></PasswordField>
+      <ImageView fx:id="Logo" fitHeight="200.0" fitWidth="200.0" layoutX="69.0" layoutY="-39.0">
+         <image>
+            <Image url="@../../resources/Logo-removebg-preview.png" />
+         </image>
+      </ImageView>
+      <TextField fx:id="Usuario" alignment="CENTER" layoutX="94.0" layoutY="198.0" promptText="USUARIO">
+         <cursor>
+            <Cursor fx:constant="TEXT" />
+         </cursor>
+         <effect>
+            <InnerShadow height="8.0" radius="3.5" width="8.0" />
+         </effect></TextField>
+      <Button fx:id="Boton" layoutX="118.0" layoutY="435.0" mnemonicParsing="false" onAction="#Registrarse" prefHeight="36.0" prefWidth="98.0" style="-fx-background-color: white; -fx-border-width: 1; -fx-border-color: black; -fx-border-radius: 3;" text="REGISTRARSE">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <effect>
+            <InnerShadow height="4.0" radius="1.5" width="4.0" />
+         </effect>
+      </Button>
+   </children>
+</Pane>

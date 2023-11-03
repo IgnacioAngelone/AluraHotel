@@ -1,0 +1,24 @@
+.highlighted-button {
+    -fx-font-size: 12px;
+    -fx-background-color: #ffffff; /* Cambia el color de fondo cuando el mouse está sobre el botón */
+    -fx-background-insets: 0, 1, 1;
+    -fx-border-color: rgba(0, 0, 0, 0.616);
+    -fx-border-radius: 4px;
+    -fx-background-radius: 3, 2, 2;
+    -fx-text-fill: rgb(0, 0, 0); /* Cambia el color del texto cuando el mouse está sobre el botón */
+    -fx-scale-x: 1.1; /* Escala en el eje X cuando el mouse está sobre el botón */
+    -fx-scale-y: 1.1; /* Escala en el eje Y cuando el mouse está sobre el botón */
+}
+
+.highlighted-button:hover {
+    -fx-border-color: rgb(0, 0, 0);
+    -fx-scale-x: 1.15; /* Escala en el eje X cuando el mouse está sobre el botón */
+    -fx-scale-y: 1.15; /* Escala en el eje Y cuando el mouse está sobre el botón */
+    
+}
+
+.table-row-cell:selected {
+    -fx-background-color: rgb(255, 255, 255); /* Cambia el color de fondo de las filas seleccionadas a azul claro */
+    -fx-text-background-color: rgb(85, 153, 167); /* Cambia el color de texto de las filas seleccionadas a negro */
+}
+

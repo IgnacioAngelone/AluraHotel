@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="contenidoPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aplicacion.ReservasController">
+   <children>
+      <ImageView fx:id="Background" fitHeight="800.0" fitWidth="1280.0">
+         <image>
+            <Image url="@../../resources/Reservas_Background.jpg" />
+         </image>
+      </ImageView>
+      <AnchorPane layoutX="359.0">
+         <children>
+            <Pane fx:id="AnchorPane" prefHeight="800.0" prefWidth="562.0" style="-fx-background-color: white;">
+               <children>
+                  <Text layoutX="187.0" layoutY="125.0" strokeType="OUTSIDE" strokeWidth="0.0" text="RESERVAS" wrappingWidth="196.71533203125">
+                     <font>
+                        <Font name="Calibri" size="44.0" />
+                     </font>
+                  </Text>
+                  <TextField fx:id="Nombre" alignment="CENTER" layoutX="151.0" layoutY="178.0" prefHeight="45.0" prefWidth="268.0" promptText="NOMBRE" style="-fx-border-color: #656565; -fx-border-radius: 4;">
+                     <effect>
+                        <InnerShadow height="8.0" radius="3.5" width="8.0" />
+                     </effect>
+                     <cursor>
+                        <Cursor fx:constant="TEXT" />
+                     </cursor>
+                  </TextField>
+                  <ImageView fx:id="Typo" fitHeight="243.0" fitWidth="326.0" layoutX="121.0" layoutY="597.0">
+                     <image>
+                        <Image url="@../../resources/Logosinfondo.png" />
+                     </image>
+                  </ImageView>
+                  <DatePicker fx:id="Ingreso" layoutX="151.0" layoutY="249.0" prefHeight="45.0" prefWidth="268.0" promptText="INGRESO" showWeekNumbers="true" style="-fx-border-color: #656565; -fx-border-radius: 4;">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </DatePicker>
+                  <DatePicker fx:id="Salida" layoutX="150.0" layoutY="325.0" prefHeight="45.0" prefWidth="268.0" promptText="SALIDA" showWeekNumbers="true" style="-fx-border-color: #656565; -fx-border-radius: 4;">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </DatePicker>
+                  <ComboBox fx:id="Metodo_pago" layoutX="150.0" layoutY="400.0" prefHeight="45.0" prefWidth="268.0" promptText="METODO DE PAGO" style="-fx-background-color: transparent; -fx-border-color: #656565; -fx-border-radius: 4;">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </ComboBox>
+                  <Button fx:id="Reservar" layoutX="230.0" layoutY="584.0" mnemonicParsing="false" onAction="#Reservar" prefHeight="45.0" prefWidth="95.0" styleClass="highlighted-button" stylesheets="@style.css" text="RESERVAR">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <TextField fx:id="Precio" alignment="CENTER" disable="true" layoutX="150.0" layoutY="482.0" prefHeight="45.0" prefWidth="268.0" promptText="PRECIO FINAL" style="-fx-border-color: black;" />
+                  <Button fx:id="Tabla" layoutX="503.0" layoutY="16.0" mnemonicParsing="false" onAction="#Boton_tabla" style="-fx-background-color: white; -fx-border-color: black; -fx-border-width: 1; -fx-border-radius: 4;" styleClass="highlighted-button" stylesheets="@style.css">
+                     <graphic>
+                        <ImageView fx:id="Tabla_boton" blendMode="SRC_ATOP" fitHeight="25.0" fitWidth="25.0">
+                           <image>
+                              <Image url="@../../resources/java.png" />
+                           </image>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </ImageView>
+                     </graphic>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                     <effect>
+                        <InnerShadow height="10.0" radius="4.5" width="10.0" />
+                     </effect>
+                  </Button>
+                  <Hyperlink fx:id="HyperReservar" layoutX="14.0" layoutY="763.0" text="Problemas al reservar?" />
+                  <ImageView fx:id="Personitas" fitHeight="35.0" fitWidth="35.0" layoutX="260.0" layoutY="31.0">
+                     <image>
+                        <Image url="@../../resources/usuarios.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>
