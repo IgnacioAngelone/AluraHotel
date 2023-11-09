@@ -28,7 +28,7 @@ try {
 // Declaracion de variables con la informacion de mysql
 String url = "jdbc:mysql://localhost:3306/arkane_database";
 String user = "root";
-String password = "root1234";
+String password = "Root1234";
 
 // Inicializa la conexión en el constructor
 connection = DriverManager.getConnection(url, user, password);
@@ -53,7 +53,7 @@ e.printStackTrace();
 
 public boolean authenticateUser(String username, String password) {
 // Declara una variable con una query
-String query = "SELECT * FROM arkane_usuarios WHERE usuarios = ? AND pass = ?";
+String query = "SELECT * FROM arkane_usuarios WHERE usuario = ? AND pass = ?";
 
 try {
 
@@ -95,7 +95,7 @@ return false;
 
 public boolean registrarUsuario(String dni, String nombre, String usuario, String contraseña) {
 // #1 Se declara la query
-String insertQuery = "INSERT INTO arkane_usuarios (nombre, dni, pass, usuarios) VALUES (?, ?, ?, ?)";
+String insertQuery = "INSERT INTO arkane_usuarios (nombre, dni, pass, usuario) VALUES (?, ?, ?, ?)";
         
 try (PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
 

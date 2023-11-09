@@ -157,7 +157,7 @@ System.err.println("Usuario correcto");
 System.err.println("Usuario incorrecto");
 
       // #2.1 Cambia el texto del boton
-      Ingresar.setText("INTENTA OTRA VEZ");
+      Ingresar.setText("INCORRECTO");
 }
 
 }

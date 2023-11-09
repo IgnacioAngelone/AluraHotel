@@ -290,7 +290,7 @@ Class.forName("com.mysql.cj.jdbc.Driver");
 // #3 Almacena los datos para la conexion
 String url = "jdbc:mysql://localhost:3306/arkane_database";
 String usuario = "root";
-String contraseña = "root1234";
+String contraseña = "Root1234";
 
 // #4 Establece la conexión
 conexion = DriverManager.getConnection(url, usuario, contraseña);

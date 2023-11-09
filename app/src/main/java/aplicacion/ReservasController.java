@@ -200,10 +200,10 @@ System.err.println("Error al reservar.");
 public void initialize() {
 
 // #1 Carga todas las imagenes
-Image imagenBackground = new Image("file:C:/Users/iange/OneDrive/Documentos/ProyectoHotel/app/src/main/resources/Reservas_Background.jpg");
-Image imagenLogo = new Image("file:C:/Users/iange/OneDrive/Documentos/ProyectoHotel/app/src/main/resources/java.png");
-Image imagenTypo = new Image("file:C:/Users/iange/OneDrive/Documentos/ProyectoHotel/app/src/main/resources/Typo.jpg");
-Image imagenpersonas = new Image("file:C:/Users/iange/OneDrive/Documentos/ProyectoHotel/app/src/main/resources/usuarios.png");
+Image imagenBackground = new Image(getClass().getResource("/Reservas_Background.jpg").toExternalForm());
+Image imagenLogo = new Image(getClass().getResource("/java.png").toExternalForm());
+Image imagenTypo = new Image(getClass().getResource("/Typo.jpg").toExternalForm());
+Image imagenpersonas = new Image(getClass().getResource("/usuarios.png").toExternalForm());
 
      // #2 Agrega opciones de pago al componente
      Metodo_pago.getItems().addAll(opcionesPago);
@@ -267,7 +267,7 @@ try {
      // #3 Se almacena la informacion para establecer una conexion con la base de datos
      String url = "jdbc:mysql://localhost:3306/arkane_database";
      String usuario = "root";
-     String contraseña = "root1234";
+     String contraseña = "Root1234";
 
      // #4 Establece la conexión
      conexion = DriverManager.getConnection(url, usuario, contraseña);
