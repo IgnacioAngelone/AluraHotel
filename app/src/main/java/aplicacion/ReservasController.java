@@ -89,101 +89,85 @@ private Button Tabla;
 * Calcula el precio total y actualiza el campo de precio.
 */
 
-private void calcularPrecio() {
+private double calcularPrecio() {
 
-// #1 Fecha de ingreso
-LocalDate ingreso = Ingreso.getValue();  
+// #1 Se obtiene el valor de ingreso
+LocalDate ingreso = Ingreso.getValue();
 
-// #2 Fecha de salida
-LocalDate salida = Salida.getValue();    
-
-// #3 Verifica las fechas
+// #2 Se obtiene el valor de salida
+LocalDate salida = Salida.getValue();
+ 
 if (ingreso != null && salida != null) {
+try {
 
-     try {
+// #3 Calcula la diferencia en días entre la fecha de ingreso y salida
+long díasDeEstadía = ChronoUnit.DAYS.between(ingreso, salida);
 
-         // #4.1 Calcula la diferencia en días entre la fecha de ingreso y salida
-         long díasDeEstadía = ChronoUnit.DAYS.between(ingreso, salida);
+// #4 Calcula el precio total multiplicando los días por el precio por día predeterminado
+return díasDeEstadía * precioPorDiaPredeterminado;
 
-         // #4.2 Calcula el precio total multiplicando los días por el precio por día predeterminado
-         double precioTotal = díasDeEstadía * precioPorDiaPredeterminado;
-
-     // #4.3 Muestra el precio total en el campo de precio
-     Precio.setText(String.valueOf(precioTotal));
-
-     } catch (NumberFormatException e) {
-         e.printStackTrace();
-         System.err.println("Error al calcular el precio.");
-     }
-
+} catch (NumberFormatException e) {
+e.printStackTrace();
+System.err.println("Error al calcular el precio.");
+}
 } else {
-
-// 5 En el caso de tener fechas nulas
 System.err.println("Fechas de ingreso y salida válidas.");
-
 }
 
-}
+// Devuelve un valor predeterminado en caso de error
+return 0.0; 
+
+ }
 
 /*
 * Metodo para reservar.
 */
 
-@FXML void Reservar(ActionEvent event) {
+@FXML
+void Reservar(ActionEvent event) {
 
-// #1 Se almacenan los datos ingresados
-String precioPorDia = Precio.getText(); 
-String ingresoStr = Ingreso.getValue().toString();
-String salidaStr = Salida.getValue().toString();
-    
-     try {
+try {
 
-// #2 Convierte las fechas a objetos LocalDate
-LocalDate ingreso = LocalDate.parse(ingresoStr);
-LocalDate salida = LocalDate.parse(salidaStr);
-    
-     // #3 Calcula la diferencia
-     long díasDeEstadía = ChronoUnit.DAYS.between(ingreso, salida);
-    
-// #4 Convierte el precio por día a número
-double precioPorDíaNum = Double.parseDouble(precioPorDia);
-    
-     // #5 Calcula el precio total
-     double precioTotal = díasDeEstadía * precioPorDíaNum;
-    
-// #6 Se almacena el nombre y el metodo de pago
+ // #1 Obtiene los datos del formulario
+
 String nombreCliente = Nombre.getText();
 
+String ingresoStr = Ingreso.getValue().toString();
+
+String salidaStr = Salida.getValue().toString();
+
 String metodoDePago = Metodo_pago.getValue().toString();
-    
-// #7 Se obtiene la conexion a la base de datos
+
+// #2 Obtiene el precio total
+double precioTotal = calcularPrecio();
+
+// #3 Establece una conexion con la base de datos
 Connection conn = obtenerConexionBaseDatos();
-    
-// #8 Consulta mysql para insertar los valores
+
+// #4 Define la query para insertar los valores
 String sql = "INSERT INTO arkane_reservas (nombre, fecha_ingreso, fecha_salida, precio, metodo_pago) VALUES (?, ?, ?, ?, ?)";
-    
-// #9 Establece los valores de la consulta de mysql
 PreparedStatement pstmt = conn.prepareStatement(sql);
 
+// #5 Establece los valores de la consulta con un index
 pstmt.setString(1, nombreCliente);
 pstmt.setString(2, ingresoStr);
 pstmt.setString(3, salidaStr);
 pstmt.setDouble(4, precioTotal);
 pstmt.setString(5, metodoDePago);
-    
-// #10 Ejecuta la update a la base de datos
+
+// #6 Ejecuta la consulta y almacena las filas
 int filasAfectadas = pstmt.executeUpdate();
-    
+
 if (filasAfectadas > 0) {
-    System.out.println("Registrado exitosamente");
+System.out.println("Registrado");
 } else {
-    System.err.println("Error al registrar");
+System.err.println("Error al registrar");
 }
-    
-// #11 Cerrar la conexión
+
+// #7 Cierra la conexion
 conn.close();
-    
-// #12 Muestra el precio total
+
+// #8 Actualiza el campo de precio
 Precio.setText(String.valueOf(precioTotal));
 
 } catch (Exception e) {
