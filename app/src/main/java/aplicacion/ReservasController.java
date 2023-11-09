@@ -1,221 +1,285 @@
 package aplicacion;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
+     import java.sql.Connection;
+     import java.sql.DriverManager;
+     import java.sql.PreparedStatement;
+     import java.time.LocalDate;
+     import java.time.temporal.ChronoUnit;
+     import javafx.beans.value.ChangeListener;
+     import javafx.beans.value.ObservableValue; 
+     import javafx.event.ActionEvent;
+     import javafx.fxml.FXML;
+     import javafx.fxml.FXMLLoader;
+     import javafx.scene.Parent;
+     import javafx.scene.control.Button;
+     import javafx.scene.control.ComboBox;
+     import javafx.scene.control.DatePicker;
+     import javafx.scene.control.Hyperlink;
+     import javafx.scene.control.TextField;
+     import javafx.scene.image.Image;
+     import javafx.scene.image.ImageView;
+     import javafx.scene.layout.AnchorPane;
+     import javafx.scene.layout.Pane;
 
-import javafx.beans.value.ChangeListener; // Importa esta clase
-import javafx.beans.value.ObservableValue; // Importa esta clase
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Hyperlink;
-import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
+/*
+
+Clase de controlador para las reservas.
+
+*/
 
 public class ReservasController {
 
-    private String[] opcionesPago = {"EFECTIVO", "TARJETA"};
+// Panel para manipular.
 
-    private double precioPorDiaPredeterminado = 200.0;
+@FXML
+private AnchorPane contenidoPane;
 
-    @FXML
-    public Pane AnchorPane;
+@FXML
+public Pane AnchorPane;
 
-    @FXML
-    private ImageView Background;
+// Formulario de la interfaz gráfica
 
-    @FXML
-    private Hyperlink HyperReservar;
+@FXML
+private TextField Nombre;
 
-    @FXML
-    private DatePicker Ingreso;
+@FXML
+private DatePicker Ingreso;
 
-    @FXML
-    public ComboBox<String> Metodo_pago; // Define el tipo genérico del ComboBox
+@FXML
+private DatePicker Salida;
 
-    @FXML
-    private TextField Nombre;
+@FXML
+public ComboBox<String> Metodo_pago;
 
-    @FXML
-    private TextField Precio;
+// Imágenes de la interfaz gráfica
 
-    @FXML
-    private Button Reservar;
+private String[] opcionesPago = {"EFECTIVO", "TARJETA"};
 
-    @FXML
-    private DatePicker Salida;
+private double precioPorDiaPredeterminado = 200.0;
 
-    @FXML
-    private Button Tabla;
+@FXML
+private TextField Precio;
 
-    @FXML
-    private ImageView Tabla_boton;
+@FXML
+private ImageView Background;
 
-    @FXML
-    private ImageView Typo;
+@FXML
+private Hyperlink HyperReservar;
 
-    @FXML
-    private ImageView Personitas;
+// Imágenes de la interfaz gráfica
 
-    private void calcularPrecio() {
-        LocalDate ingreso = Ingreso.getValue();
-        LocalDate salida = Salida.getValue();
+@FXML
+private ImageView Tabla_boton;
 
-        // Verifica si se han seleccionado fechas válidas
-        if (ingreso != null && salida != null) {
-            try {
-                // Calcula la diferencia en días
-                long díasDeEstadía = ChronoUnit.DAYS.between(ingreso, salida);
+@FXML
+private ImageView Typo;
 
-                // Calcula el precio total
-                double precioTotal = díasDeEstadía * precioPorDiaPredeterminado;
+@FXML
+private ImageView Personitas;
 
-                // Muestra el precio total en el campo de precio
-                Precio.setText(String.valueOf(precioTotal));
-            } catch (NumberFormatException e) {
-                // Manejo de errores al calcular el precio
-                e.printStackTrace();
-                System.err.println("Error al calcular el precio.");
-            }
-        } else {
-            // Manejo de fechas nulas
-            System.err.println("Por favor, seleccione fechas de ingreso y salida válidas.");
-        }
-    }
+// Botones de la interfaz grafica
+
+@FXML
+private Button Reservar;
+
+@FXML
+private Button Tabla;
+
+/*
+* Calcula el precio total y actualiza el campo de precio.
+*/
+
+private void calcularPrecio() {
+
+// #1 Fecha de ingreso
+LocalDate ingreso = Ingreso.getValue();  
+
+// #2 Fecha de salida
+LocalDate salida = Salida.getValue();    
+
+// #3 Verifica las fechas
+if (ingreso != null && salida != null) {
+
+     try {
+
+         // #4.1 Calcula la diferencia en días entre la fecha de ingreso y salida
+         long díasDeEstadía = ChronoUnit.DAYS.between(ingreso, salida);
+
+         // #4.2 Calcula el precio total multiplicando los días por el precio por día predeterminado
+         double precioTotal = díasDeEstadía * precioPorDiaPredeterminado;
+
+     // #4.3 Muestra el precio total en el campo de precio
+     Precio.setText(String.valueOf(precioTotal));
+
+     } catch (NumberFormatException e) {
+         e.printStackTrace();
+         System.err.println("Error al calcular el precio.");
+     }
+
+} else {
+
+// 5 En el caso de tener fechas nulas
+System.err.println("Fechas de ingreso y salida válidas.");
+
+}
+
+}
+
+/*
+* Metodo para reservar.
+*/
+
+@FXML void Reservar(ActionEvent event) {
+
+// #1 Se almacenan los datos ingresados
+String precioPorDia = Precio.getText(); 
+String ingresoStr = Ingreso.getValue().toString();
+String salidaStr = Salida.getValue().toString();
     
-    
-    @FXML
-    void Reservar(ActionEvent event) {
-        String precioPorDia = Precio.getText(); // Precio por día
-        String ingresoStr = Ingreso.getValue().toString();
-        String salidaStr = Salida.getValue().toString();
-    
-        try {
-            // Convierte las fechas de String a objetos LocalDate
-            LocalDate ingreso = LocalDate.parse(ingresoStr);
-            LocalDate salida = LocalDate.parse(salidaStr);
-    
-            // Calcula la diferencia en días
-            long díasDeEstadía = ChronoUnit.DAYS.between(ingreso, salida);
-    
-            // Convierte el precio por día a número
-            double precioPorDíaNum = Double.parseDouble(precioPorDia);
-    
-            // Calcula el precio total
-            double precioTotal = díasDeEstadía * precioPorDíaNum;
-    
-            // Obtén el nombre y método de pago (asegúrate de vincular estos campos en tu interfaz)
-            String nombreCliente = Nombre.getText();
-            String metodoDePago = Metodo_pago.getValue().toString();
-    
-            // Insertar los datos en la base de datos
-            Connection conn = obtenerConexionBaseDatos();
-    
-            // Consulta SQL para insertar los datos
-            String sql = "INSERT INTO arkane_reservas (nombre, fecha_ingreso, fecha_salida, precio, metodo_pago) VALUES (?, ?, ?, ?, ?)";
-    
-            // Preparar la sentencia SQL
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, nombreCliente);
-            pstmt.setString(2, ingresoStr);
-            pstmt.setString(3, salidaStr);
-            pstmt.setDouble(4, precioTotal);
-            pstmt.setString(5, metodoDePago);
-    
-            // Ejecutar la inserción
-            int filasAfectadas = pstmt.executeUpdate();
-    
-            if (filasAfectadas > 0) {
-                System.out.println("Inserción exitosa");
-            } else {
-                System.err.println("Error al insertar en la base de datos");
-            }
-    
-            // Cerrar la conexión
-            conn.close();
-    
-            // Muestra el precio total en el campo de precio
-            Precio.setText(String.valueOf(precioTotal));
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.err.println("Error al procesar la reserva.");
-        }
-    }
-    
-    public void initialize() {
-        // Cargar y mostrar las imágenes en el controlador de registro (ajusta las rutas)
-        Image imagenBackground = new Image("file:C:/Users/iange/OneDrive/Documentos/ProyectoHotel/app/src/main/resources/Reservas_Background.jpg");
-        Image imagenLogo = new Image("file:C:/Users/iange/OneDrive/Documentos/ProyectoHotel/app/src/main/resources/java.png");
-        Image imagenTypo = new Image("file:C:/Users/iange/OneDrive/Documentos/ProyectoHotel/app/src/main/resources/Typo.jpg");
-        Image imagenpersonas = new Image("file:C:/Users/iange/OneDrive/Documentos/ProyectoHotel/app/src/main/resources/usuarios.png");
+     try {
 
-        Metodo_pago.getItems().addAll(opcionesPago);
+// #2 Convierte las fechas a objetos LocalDate
+LocalDate ingreso = LocalDate.parse(ingresoStr);
+LocalDate salida = LocalDate.parse(salidaStr);
+    
+     // #3 Calcula la diferencia
+     long díasDeEstadía = ChronoUnit.DAYS.between(ingreso, salida);
+    
+// #4 Convierte el precio por día a número
+double precioPorDíaNum = Double.parseDouble(precioPorDia);
+    
+     // #5 Calcula el precio total
+     double precioTotal = díasDeEstadía * precioPorDíaNum;
+    
+// #6 Se almacena el nombre y el metodo de pago
+String nombreCliente = Nombre.getText();
 
-        Typo.setImage(imagenTypo);
-        Background.setImage(imagenBackground);
-        Tabla_boton.setImage(imagenLogo);
-        Personitas.setImage(imagenpersonas);
+String metodoDePago = Metodo_pago.getValue().toString();
+    
+// #7 Se obtiene la conexion a la base de datos
+Connection conn = obtenerConexionBaseDatos();
+    
+// #8 Consulta mysql para insertar los valores
+String sql = "INSERT INTO arkane_reservas (nombre, fecha_ingreso, fecha_salida, precio, metodo_pago) VALUES (?, ?, ?, ?, ?)";
+    
+// #9 Establece los valores de la consulta de mysql
+PreparedStatement pstmt = conn.prepareStatement(sql);
 
-        Ingreso.valueProperty().addListener(new ChangeListener<LocalDate>() {
-            @Override
-            public void changed(ObservableValue<? extends LocalDate> observable, LocalDate oldValue, LocalDate newValue) {
-                calcularPrecio();
-            }
-        });
+pstmt.setString(1, nombreCliente);
+pstmt.setString(2, ingresoStr);
+pstmt.setString(3, salidaStr);
+pstmt.setDouble(4, precioTotal);
+pstmt.setString(5, metodoDePago);
+    
+// #10 Ejecuta la update a la base de datos
+int filasAfectadas = pstmt.executeUpdate();
+    
+if (filasAfectadas > 0) {
+    System.out.println("Registrado exitosamente");
+} else {
+    System.err.println("Error al registrar");
+}
+    
+// #11 Cerrar la conexión
+conn.close();
+    
+// #12 Muestra el precio total
+Precio.setText(String.valueOf(precioTotal));
 
-        Salida.valueProperty().addListener(new ChangeListener<LocalDate>() {
-            @Override
-            public void changed(ObservableValue<? extends LocalDate> observable, LocalDate oldValue, LocalDate newValue) {
-                calcularPrecio();
-            }
-        });
-    }
+} catch (Exception e) {
+e.printStackTrace();
+System.err.println("Error al reservar.");
+}
 
-    @FXML
-    private AnchorPane contenidoPane; // Asegúrate de vincular esto en Scene Builder
+}
 
-    @FXML
-    void Boton_tabla(ActionEvent event) {
-        try {
-            // Carga el nuevo FXML para la tabla
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("Tabla.fxml"));
-            Parent nuevoContenido = loader.load();
+/*
+* Inicializa el controlador.
+*/
 
-            // Reemplaza el contenido actual en el AnchorPane
-            contenidoPane.getChildren().setAll(nuevoContenido);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+public void initialize() {
 
-    // Método para obtener una conexión a la base de datos
-    public Connection obtenerConexionBaseDatos() {
-        Connection conexion = null;
-        try {
-            // Carga el controlador JDBC de MySQL (asegúrate de que el archivo JAR esté en tu proyecto)
-            Class.forName("com.mysql.cj.jdbc.Driver");
+// #1 Carga todas las imagenes
+Image imagenBackground = new Image("file:C:/Users/iange/OneDrive/Documentos/ProyectoHotel/app/src/main/resources/Reservas_Background.jpg");
+Image imagenLogo = new Image("file:C:/Users/iange/OneDrive/Documentos/ProyectoHotel/app/src/main/resources/java.png");
+Image imagenTypo = new Image("file:C:/Users/iange/OneDrive/Documentos/ProyectoHotel/app/src/main/resources/Typo.jpg");
+Image imagenpersonas = new Image("file:C:/Users/iange/OneDrive/Documentos/ProyectoHotel/app/src/main/resources/usuarios.png");
 
-            // URL de conexión a la base de datos
-            String url = "jdbc:mysql://localhost:3306/arkane_database";
-            String usuario = "root";
-            String contraseña = "root1234";
+     // #2 Agrega opciones de pago al componente
+     Metodo_pago.getItems().addAll(opcionesPago);
 
-            // Establece la conexión
-            conexion = DriverManager.getConnection(url, usuario, contraseña);
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.err.println("Error al conectarse a la base de datos.");
-        }
-        return conexion;
-    }
+// #3 Asigna las imagenes a los componentes
+Typo.setImage(imagenTypo);
+Background.setImage(imagenBackground);
+Tabla_boton.setImage(imagenLogo);
+Personitas.setImage(imagenpersonas);
+
+// #4 Calcula los precios de ingreso y salida
+Ingreso.valueProperty().addListener(new ChangeListener<LocalDate>() {
+@Override
+public void changed(ObservableValue<? extends LocalDate> observable, LocalDate oldValue, LocalDate newValue) {
+calcularPrecio();
+}});
+
+Salida.valueProperty().addListener(new ChangeListener<LocalDate>() {
+@Override
+public void changed(ObservableValue<? extends LocalDate> observable, LocalDate oldValue, LocalDate newValue) {
+     calcularPrecio();
+}});
+
+}
+
+/*
+* Cambia el panel.
+*/
+
+@FXML
+void Boton_tabla(ActionEvent event) {
+try {
+     // #1 Carga el nuevo FXML
+     FXMLLoader loader = new FXMLLoader(getClass().getResource("Tabla.fxml"));
+
+     // #2 Pasa el FXML a la raiz
+     Parent nuevoContenido = loader.load();
+
+     // #3 Reemplaza el contenido actual en el AnchorPane
+     contenidoPane.getChildren().setAll(nuevoContenido);
+
+} catch (Exception e) {
+     e.printStackTrace();
+}
+
+}
+
+/*
+* Obtener una conexion a la base de datos.
+*/
+
+public Connection obtenerConexionBaseDatos() {
+
+// #1 Establece una conexion nula
+Connection conexion = null;
+
+try {
+     // #2 Carga el controlador JDBC
+     Class.forName("com.mysql.cj.jdbc.Driver");
+
+     // #3 Se almacena la informacion para establecer una conexion con la base de datos
+     String url = "jdbc:mysql://localhost:3306/arkane_database";
+     String usuario = "root";
+     String contraseña = "root1234";
+
+     // #4 Establece la conexión
+     conexion = DriverManager.getConnection(url, usuario, contraseña);
+
+} catch (Exception e) {
+     e.printStackTrace();
+     System.err.println("Error al conectarse.");
+}
+
+// #5 Retorna la conexion
+return conexion;
+
+}
+    
 }

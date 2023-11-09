@@ -1,3 +1,7 @@
 {
-    "java.debug.settings.onBuildFailureProceed": true
+    "java.debug.settings.onBuildFailureProceed": true,
+    "editor.colorDecoratorsActivatedOn": "clickAndHover",
+    "editor.bracketPairColorization.enabled": true,
+    "editor.colorDecorators": true,
+    "java.configuration.updateBuildConfiguration": "automatic"
 }

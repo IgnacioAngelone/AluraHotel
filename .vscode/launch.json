@@ -23,7 +23,7 @@
             "request": "launch",
             "mainClass": "aplicacion.Main",
             "projectName": "app",
-            "vmArgs": "--module-path \"C:/Users/iange/Downloads/demo/src/main/resources/JavaFX/lib\" --add-modules javafx.controls,javafx.fxml"
+            "vmArgs": "--module-path \"C:/Program Files/Java/21/visual/lib\" --add-modules javafx.controls,javafx.fxml"
         }
     ]
 }
