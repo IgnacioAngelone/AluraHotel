@@ -142,7 +142,7 @@ public void initialize() {
 
 // #1 Carga todas las imagenes
 Image imagenBackground = new Image(getClass().getResource("/Reservas_Background.jpg").toExternalForm());
-Image imagenLogo = new Image(getClass().getResource("/Usuarios.png").toExternalForm());
+Image imagenLogo = new Image(getClass().getResource("/usuarios.png").toExternalForm());
 Image imagenTypo = new Image(getClass().getResource("/Typo.jpg").toExternalForm());
 Image imagendata = new Image(getClass().getResource("/java.png").toExternalForm());
 
